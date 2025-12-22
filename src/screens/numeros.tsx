@@ -51,7 +51,7 @@ export function ListaNumScreens() {
             {numero} {numero % 2 === 0 ? '(Par)' : '(Ímpar)'}
         </Text>
         ))}
-              <Text>Resultado: {resultado === 0 ? 'Par' : resultado === 1 ? 'Ímpar' : '...'}</Text>
+             
       </ScrollView>
     </View>
   );
