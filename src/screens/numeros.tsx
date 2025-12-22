@@ -1,8 +1,13 @@
 import { ButtonCustomizado } from '@/components/botaoCustomizado';
 import { InputCustomizado } from '@/components/inputCustomizado';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useEffect } from 'react';
+import { storeData } from '@/utils/storage';
+import { getData } from '@/utils/storage';
+
+
+
 
 export function ListaNumScreens() {
   const [item, setItem] = useState('');
@@ -20,13 +25,27 @@ export function ListaNumScreens() {
     if (isNaN(numero)) return;
 
     setLista([...lista, numero]);
+        storeData({key: 'numeros', value: JSON.stringify([...lista, numero])});
     setItem('');
   }
 
   function LimparLista() {
-    setLista([]);
+            storeData({key: 'numeros', value: JSON.stringify([])});
+setLista([]);
   }
+   async function carregarLista() {
+    const dados = await getData('numeros');
 
+    if (dados) {
+      setLista(dados);
+    }
+  }
+    useEffect(() => { 
+    carregarLista();
+  }, []);
+
+
+  
   return (
     <View className="flex-1 items-center">
       <View className="w-full items-center gap-4 p-4">
